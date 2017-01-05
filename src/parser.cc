@@ -7,7 +7,7 @@ parser::parse(const string &str){
 }
 
 string
-parser::serilize(const json &json_data) {
+parser::serialize(const json &json_data) {
   return json_data.dump();
 }
 }
