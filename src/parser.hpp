@@ -10,7 +10,8 @@ using nlohmann::json;
 namespace akashi {
 class parser {
 public:
-  static json parse(string str);
+  static json parse(const string&);
+  static string serialize(const json&);
 };
 }
 

@@ -14,3 +14,16 @@ TEST_CASE("Parser should parse JSON string into JSON object", "[parser]") {
       REQUIRE(result["args"][1] == "2");
     }
 }
+
+TEST_CASE("Parser should convert a JSON object into a standard JSON string",
+"[Parser]") {
+  SECTION("JSON Serilize Test 1") {
+    json json_data = {
+      {"command", "Test Command"},
+      {"args", {"1", "2"}}
+    };
+    auto result = parser::serilize(json_data);
+    REQUIRE(result.find("\"command\":\"Test Command\"") != string::npos);
+    REQUIRE(result.find("\"args\":[\"1\",\"2\"]") != string::npos);
+  }
+}
