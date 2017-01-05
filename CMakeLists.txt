@@ -12,5 +12,5 @@ set(AKASHI_TESTCASE_DIR "${AKASHI_TEST_DIR}/testcase")
 include_directories(${AKASHI_SRC_THIRDPATRY_DIR})
 include_directories(${AKASHI_SRC_DIR})
 
-#add_subdirectory(src)
+add_subdirectory(src)
 add_subdirectory(test/testcase)
