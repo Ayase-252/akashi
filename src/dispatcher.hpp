@@ -3,8 +3,10 @@
 
 #include "json.hpp"
 #include <string>
+#include <map>
 
 using std::string;
+using std::map;
 using nlohmann::json;
 
 typedef void (*handler_function)(const json&);
@@ -19,6 +21,7 @@ public:
 
 private:
   json last_dispatched_command;
+  map<string, handler_function> dispatch_table;
 };
 }
 
