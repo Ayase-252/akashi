@@ -1,18 +1,18 @@
 #include "dispatcher.hpp"
 
 namespace akashi {
-dispatcher::dispatcher(void):
+Dispatcher::Dispatcher(void):
 last_dispatched_command("{}"_json) {
 
 }
 
 void
-dispatcher::set_handler(const string &command, handler_function pHandler){
+Dispatcher::set_handler(const string &command, handler_function pHandler){
   dispatch_table.insert({command, pHandler});
 }
 
 bool
-dispatcher::dispatch(json &incoming_json){
+Dispatcher::dispatch(json &incoming_json){
   // Command is not in dispatch table.
   string command = incoming_json["command"];
   if(dispatch_table.find(command) == dispatch_table.end()) {
@@ -24,7 +24,7 @@ dispatcher::dispatch(json &incoming_json){
 }
 
 json
-dispatcher::get_last_dispatched_command(void) const{
+Dispatcher::get_last_dispatched_command(void) const{
   return last_dispatched_command;
 }
 }

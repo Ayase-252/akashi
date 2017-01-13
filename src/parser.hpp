@@ -8,7 +8,7 @@ using std::string;
 using nlohmann::json;
 
 namespace akashi {
-class parser {
+class Parser {
 public:
   static json parse(const string&);
   static string serialize(const json&);

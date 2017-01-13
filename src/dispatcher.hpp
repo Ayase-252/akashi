@@ -12,9 +12,9 @@ using nlohmann::json;
 typedef void (*handler_function)(const json&);
 
 namespace akashi {
-class dispatcher {
+class Dispatcher {
 public:
-  dispatcher(void);
+  Dispatcher(void);
   void set_handler(const std::string&, handler_function);
   bool dispatch(json &);
   json get_last_dispatched_command(void) const;
