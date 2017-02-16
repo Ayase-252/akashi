@@ -24,3 +24,4 @@ include_directories(${AKASHI_SRC_DIR})
 
 add_subdirectory(src)
 add_subdirectory(test/testcase)
+add_subdirectory(examples)
