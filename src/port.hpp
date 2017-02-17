@@ -40,7 +40,7 @@ public:
   **  For more information on smart pointer, see books with C++11 content
   **  such as "C++ Primer 5ed.".
   **/
-  unique_ptr<tcp::socket> accept(void) const;
+  void accept(void);
 
   /** Read
   **  Reads data from accepted connection.
@@ -52,7 +52,7 @@ public:
   **  Returns:
   **  string      Data from accepted connection
   **/
-  string read(unique_ptr<tcp::socket>&) const;
+  string read() const;
 
   /** Send
   **  Sends data via accepted connection.
@@ -60,14 +60,11 @@ public:
   **  Parameters:
   **  data    const string&   Data to transmit
   **/
-  // void send(const string &);
-
-  /* Connection must be managed manually. */
-  // void close_connection();
+  void send(const string &) const;
 
 private:
   const uint32_t _port;
-
+  unique_ptr<tcp::socket> _socket_ptr;
 
 };
 /* Ending of namespace akashi */

@@ -26,34 +26,29 @@ Port::Port(const uint32_t port):_port(port) {
 
 }
 
-unique_ptr<tcp::socket>
-Port::accept() const {
+void
+Port::accept() {
   io_service io_service;
   tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), this->_port));
-  unique_ptr<tcp::socket> socket_ptr(new tcp::socket(io_service));
+  this->_socket_ptr = unique_ptr<tcp::socket>(new tcp::socket(io_service));
   cout << "Waiting for incomming connection.\n";
-  acceptor.accept(*socket_ptr);
+  acceptor.accept(*this -> _socket_ptr);
   cout << "Connection Established.\n";
-  return socket_ptr;
 }
 
 string
-Port::read(unique_ptr<tcp::socket>& socket_ptr) const {
+Port::read() const {
   string read_string("");
   try {
-    for(;;) {
-      // Clear the buffer
-      char char_buffer[max_char_length] = {'\0'};
-      error_code error;
-      socket_ptr->read_some(buffer(char_buffer), error);
-      if(error== asio::error::eof) {
-        break;
-      } else if(error) {
-        asio::system_error(error);
-      }
-      cout << "Incomming message:" << string(char_buffer) <<'\n';
-      read_string += string(char_buffer);
+    // Clear the buffer
+    char char_buffer[max_char_length] = {'\0'};
+    error_code error;
+    this -> _socket_ptr -> read_some(buffer(char_buffer), error);
+    if(error) {
+      asio::system_error(error);
     }
+    cout << "Incomming message:" << string(char_buffer) <<'\n';
+    read_string += string(char_buffer);
   }
   catch (exception& e) {
     cerr << e.what() << '\n';
@@ -63,4 +58,15 @@ Port::read(unique_ptr<tcp::socket>& socket_ptr) const {
   return read_string;
 }
 
+void
+Port::send(const string& data) const {
+  char* c_data = const_cast<char*>(data.c_str());
+  size_t length = data.length();
+  try {
+    this -> _socket_ptr -> write_some(asio::buffer(c_data, length));
+  }
+  catch (exception& e) {
+    cerr << e.what() << '\n';
+  }
+}
 }
